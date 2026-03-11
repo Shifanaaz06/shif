@@ -1,13 +1,9 @@
-name: Build and Push to GHCR
+name: Build and Push Docker Image
 
 on:
   push:
     branches:
       - main
-
-permissions:
-  contents: read
-  packages: write
 
 jobs:
   build:
@@ -15,15 +11,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Log in to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build Docker image
-        run: |
-          docker build -t ghcr.io/${{ github.repository }}:latest .
+        run: docker build -t ghcr.io/shifanaaz06/shifanaaz1234:latest .
 
       - name: Push Docker image
-        run: |
-          docker push ghcr.io/${{ github.repository }}:latest
+        run: docker push ghcr.io/shifanaaz06/shifanaaz1234:latest
